@@ -12,6 +12,13 @@ import AutoSignInCheckbox from "../../../components/autoSignInCheckbox/AutoSignI
 import Divider from "../../../components/divider/Divider";
 import Button from "../../../components/button/Button";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth } from "../../../firebase/firebase";
 
 const LoginClient = () => {
   const [email, setEmail] = useState("");
@@ -19,9 +26,40 @@ const LoginClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isAutoLogin, setIsAutoLogin] = useState(false);
 
-  const loginUser = (e) => {};
+  const router = useRouter();
 
-  const signInWithGoogle = () => {};
+  const redirectUser = () => {
+    router.push("/");
+  };
+
+  const loginUser = (e) => {
+    e.preventDefault();
+    toast.info("성공!");
+    setIsLoading(true);
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        setIsLoading(false);
+        toast.success("로그인에 성공했습니다.");
+        redirectUser();
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        toast.error(error.message);
+      });
+  };
+
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        toast.success("로그인에 성공했습니다.");
+        redirectUser();
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
 
   return (
     <>
