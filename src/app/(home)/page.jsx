@@ -1,7 +1,14 @@
 import React from "react";
+import Slider from "../../components/slider/Slider";
+import Product from "../../components/product/Product";
 
 function Home() {
-  return <main>Home</main>;
+  return (
+    <>
+      <Slider />
+      <Product />
+    </>
+  );
 }
 
 export default Home;

@@ -8,7 +8,10 @@ import { toast } from "react-toastify";
 import { usePathname, useRouter } from "next/navigation";
 import InnerHeader from "../innerHeader/InnerHeader";
 import { useDispatch } from "react-redux";
-import { SET_ACTIVE_USER } from "../../redux/slice/authSlice";
+import {
+  REMOVE_ACTIVE_USER,
+  SET_ACTIVE_USER,
+} from "../../redux/slice/authSlice";
 
 const Header = () => {
   const pathname = usePathname();
@@ -38,9 +41,10 @@ const Header = () => {
       } else {
         setDisplayName("");
         // 유저 정보를 리덕스 스토어에서 지우기
+        dispatch(REMOVE_ACTIVE_USER());
       }
     });
-  }, [displayName]);
+  }, [dispatch, displayName]);
 
   const logoutUser = () => {
     signOut(auth)
