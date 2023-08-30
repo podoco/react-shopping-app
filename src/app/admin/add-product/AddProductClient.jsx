@@ -4,7 +4,12 @@ import { useRouter } from "next/navigation";
 import Loader from "../../../components/loader/Loader";
 import Heading from "../../../components/heading/Heading";
 import Button from "../../../components/button/Button";
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
+import { getDownloadURL, uploadBytesResumable, ref } from "firebase/storage";
+import { storage } from "../../../firebase/firebase";
+import { toast } from "react-toastify";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { db } from "../../../firebase/firebase";
 export const categories = [
   { id: 1, name: "Laptop" },
   { id: 2, name: "Electronics" },
@@ -35,16 +40,59 @@ const AddProductClient = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
 
-  const handleImageChange = (e) => {};
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const storageRef = ref(storage, `images/${Date.now()}${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploadProgress(progress);
+      },
+      (error) => {
+        toast.error(error.message);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setProduct({ ...product, imageURL: downloadURL });
+          toast.success("이미지를 성공적으로 업로했습니다.");
+        });
+      }
+    );
+  };
 
   const addProduct = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      addDoc(collection(db, "products"), {
+        name: product.name,
+        imageURL: product.imageURL,
+        price: Number(product.price),
+        category: product.category,
+        brand: product.brand,
+        desc: product.desc,
+        createdAt: Timestamp.now().toDate(),
+      });
+      setIsLoading(false);
+      setUploadProgress(0);
+      setProduct({ ...initialState });
+
+      toast.success("상품을 저장했습니다.");
+      router.push("/admin/all-products");
+    } catch (error) {
+      setIsLoading(false);
+      toast.error(error.message);
+    }
   };
 
   return (
