@@ -1,5 +1,5 @@
 "use client";
-import { db } from "../../../firebase/firebase";
+import { db } from "../firebase/firebase";
 import {
   DocumentData,
   collection,
