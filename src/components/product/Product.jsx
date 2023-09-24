@@ -31,7 +31,7 @@ const Product = () => {
   }, [data, dispatch]);
 
   //store에서 가져오기
-  const products = useSelector(selectProducts);
+  // const products = useSelector(selectProducts);
 
   return (
     <section className={styles.product}>
