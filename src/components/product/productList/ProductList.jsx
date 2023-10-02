@@ -27,12 +27,13 @@ const ProductList = () => {
     indexOfFirstProcut,
     indexOfLastProduct
   );
+  console.log("currentProducts", currentProducts);
 
   const isRadioSelected = (value) => sort === value;
   const handleRadioClick = (e) => setSort(e.target.value);
 
   return (
-    <div className={styles.ProductList}>
+    <div className={styles.productList}>
       <div className={styles.top}>
         <div>
           <ul className={styles.sort}>
@@ -76,7 +77,6 @@ const ProductList = () => {
             </li>
           </ul>
         </div>
-
         <div className={styles.limit}>
           <select
             value={productsPerPage}
@@ -86,29 +86,28 @@ const ProductList = () => {
             <option value={20}>20개씩 보기</option>
           </select>
         </div>
-
-        <div className={styles.grid}>
-          {currentProducts.length === 0 ? (
-            <p>상품이 없습니다.</p>
-          ) : (
-            <>
-              {currentProducts.map((product) => {
-                return (
-                  <div key={product.id}>
-                    <ProductItem {...product} />
-                  </div>
-                );
-              })}
-            </>
-          )}
-        </div>
-        {/* <Pagination
+      </div>
+      <div className={styles.grid}>
+        {currentProducts.length === 0 ? (
+          <p>상품이 없습니다.</p>
+        ) : (
+          <>
+            {currentProducts.map((product) => {
+              return (
+                <div key={product.id}>
+                  <ProductItem {...product} />
+                </div>
+              );
+            })}
+          </>
+        )}
+      </div>
+      {/* <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           totalProducts={filteredProducts.length}
           productsPerPage={productsPerPage}
         /> */}
-      </div>
     </div>
   );
 };

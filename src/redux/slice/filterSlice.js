@@ -40,7 +40,7 @@ const filterSlice = createSlice({
       let tempProducts = [];
 
       tempProducts = products.filter(
-        (product) => product.price === price);
+        (product) => product.price <= price);
 
       state.filteredProducts = tempProducts;
     },
@@ -63,7 +63,7 @@ const filterSlice = createSlice({
           (product) => product.brand === brand
         )
       }
-      tempProducts = tempProducts.filter((product) => product.price === price)
+      tempProducts = tempProducts.filter((product) => product.price <= price)
 
       state.filteredProducts = tempProducts;
     },
