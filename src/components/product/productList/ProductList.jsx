@@ -6,6 +6,7 @@ import {
 } from "../../../redux/slice/filterSlice";
 import styles from "./ProductList.module.scss";
 import ProductItem from "../productItem/ProductItem";
+import Pagination from "../../../components/pagination/Pagination";
 
 const ProductList = () => {
   const [sort, setSort] = useState("latest");
@@ -102,12 +103,12 @@ const ProductList = () => {
           </>
         )}
       </div>
-      {/* <Pagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalProducts={filteredProducts.length}
-          productsPerPage={productsPerPage}
-        /> */}
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalProducts={filteredProducts.length}
+        productsPerPage={productsPerPage}
+      />
     </div>
   );
 };
