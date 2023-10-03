@@ -40,7 +40,7 @@ const filterSlice = createSlice({
       let tempProducts = [];
 
       tempProducts = products.filter(
-        (product) => product.price === price);
+        (product) => product.price <= price);
 
       state.filteredProducts = tempProducts;
     },
@@ -63,7 +63,7 @@ const filterSlice = createSlice({
           (product) => product.brand === brand
         )
       }
-      tempProducts = tempProducts.filter((product) => product.price === price)
+      tempProducts = tempProducts.filter((product) => product.price <= price)
 
       state.filteredProducts = tempProducts;
     },
@@ -89,6 +89,18 @@ const filterSlice = createSlice({
 
       state.filteredProducts = tempProducts;
 
+    },
+    FILTER_BY_SEARCH: (state, action) => {
+
+      const { products, search } = action.payload;
+
+      const tempProducts = products.filter(
+        (product) =>
+          product.name.toLowerCase().includes(search.toLowerCase()) ||
+          product.category.toLowerCase().includes(search.toLowerCase())
+      )
+
+      state.filteredProducts = tempProducts;
     }
   }
 });
