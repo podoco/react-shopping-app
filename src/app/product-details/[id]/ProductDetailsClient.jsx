@@ -12,6 +12,7 @@ import Divider from "../../../components/divider/Divider";
 import priceFormat from "../../../utils/priceFormat";
 import { useDispatch } from "react-redux";
 import listCashIcon from "../../../assets/list-cash-icon.png";
+import ProductReviewItem from "../../../components/product/productReviewItem/ProductReviewItem";
 const ProductDetails = () => {
   const { id } = useParams();
 
