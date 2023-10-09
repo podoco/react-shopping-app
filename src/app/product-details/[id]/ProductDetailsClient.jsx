@@ -13,6 +13,10 @@ import priceFormat from "../../../utils/priceFormat";
 import { useDispatch } from "react-redux";
 import listCashIcon from "../../../assets/list-cash-icon.png";
 import ProductReviewItem from "../../../components/product/productReviewItem/ProductReviewItem";
+import {
+  ADD_TO_CART,
+  CALCULATE_TOTAL_QUANTITY,
+} from "../../../redux/slice/cartSlice";
 const ProductDetails = () => {
   const { id } = useParams();
 
@@ -26,7 +30,10 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const [count, setCount] = useState(1);
 
-  const addToCart = () => {};
+  const addToCart = () => {
+    dispatch(ADD_TO_CART({ ...product, quantity: count }));
+    dispatch(CALCULATE_TOTAL_QUANTITY());
+  };
 
   const today = new Date();
   const tomorrow = new Date(today.setDate(today.getDate() + 1));
