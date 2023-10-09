@@ -2,11 +2,13 @@ import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/
 import authReducer from './slice/authSlice'
 import filterReducer from './slice/filterSlice';
 import productReducer from './slice/productSlice'
+import cartReducer from './slice/cartSlice'
 
 const rootReducer = combineReducers({
   auth: authReducer,
   product: productReducer,
-  filter: filterReducer
+  filter: filterReducer,
+  cart: cartReducer
 })
 
 const store = configureStore({
