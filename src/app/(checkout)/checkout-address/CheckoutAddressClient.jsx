@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import styles from "./CheckoutAddress.module.scss";
 import { useDispatch } from "react-redux";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import {
   SAVE_SHIPPING_ADDRESS,
   SAVE_BILLING_ADDRESS,
@@ -30,11 +30,11 @@ const CheckoutAddressClient = () => {
   const router = useRouter();
 
   const handleShipping = (e) => {
-    const { name, value } = e.target.value;
+    const { name, value } = e.target;
     setShippingAddress({ ...shippingAddress, [name]: value });
   };
   const handleBilling = (e) => {
-    const { name, value } = e.target.value;
+    const { name, value } = e.target;
     setBillingAddress({ ...billingAddress, [name]: value });
   };
 
