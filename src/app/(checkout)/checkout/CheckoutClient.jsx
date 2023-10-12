@@ -11,9 +11,11 @@ import {
   selectCartItems,
   selectCartTotalAmount,
 } from "../../../redux/slice/cartSlice";
+import { toast } from "react-toastify";
 import { selectEmail, selectUserID } from "../../../redux/slice/authSlice";
 import { selectShippingAddress } from "../../../redux/slice/checkoutSlice";
 import { Timestamp } from "firebase/firestore";
+import { db } from "../../../firebase/firebase";
 import { useRouter } from "next/navigation";
 
 const CheckoutClient = () => {
